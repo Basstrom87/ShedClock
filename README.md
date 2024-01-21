@@ -1,0 +1,2 @@
+Just a quick little project to integrate a 2.8in SPI TFT screen, ESP32, DHT22 sensor to display the current date, time and temperature details on the screen.
+It also has provisions for MQTT messaging to recieve messages from other sensors placed around, in this case Outside and Inside. These sensors are, again DHT22 but running on an ESP8266's and the MQTT Server is a Mosquitto server running on a Raspberry Pi B+ (the Raspberry Pi 1!)
