@@ -16,13 +16,16 @@ DHT dht(DHTPIN, DHTTYPE);
 // NTP Variables
 WiFiUDP ntpUDP;
 // DST
-NTPClient timeClient(ntpUDP, "au.pool.ntp.org", 37800, 60000);
+//NTPClient timeClient(ntpUDP, "au.pool.ntp.org", 37800, 60000);
 // Non-DST
-// NTPClient timeClient(ntpUDP, "au.pool.ntp.org", 34200, 60000);
+NTPClient timeClient(ntpUDP, "au.pool.ntp.org", 34200, 60000);
 
 // Screen and Fonts Variables
 #include "Free_Fonts.h" // Include the header file attached to this sketch
 TFT_eSPI tft = TFT_eSPI();
+
+// Screen Refresh Boolean
+bool screenRefresh = false;
 
 // MQTT Variables
 const char* mqtt_server = "xxx.xxx.xxx.xxx";
@@ -163,6 +166,17 @@ void loop() {
   else{
     currentMinutesStr = currentMinutes;
   }
+
+  // Refresh the screen to fix the extra numbers when past 12 o'clock
+
+  if (currentHours == 1 && screenRefresh == false){
+    tft.fillScreen(TFT_BLACK);
+    screenRefresh = true;
+  }
+  else if (currentHours == 2 && screenRefresh == true){
+    screenRefresh = false;
+  }
+  
 
   // Build up time string.
   timeString = "";
